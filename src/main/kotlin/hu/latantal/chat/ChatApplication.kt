@@ -96,7 +96,6 @@ class ChatApplication(
 		println("\nis name 'anti' used: ${u.isNameUsed("anti")}")
 		println("is name 'anthony' used: ${u.isNameUsed("anthony")}")
 
-		//c.deleteContact(bob, alice)
 	}
 
 }

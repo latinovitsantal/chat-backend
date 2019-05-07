@@ -35,11 +35,10 @@ class MessageController(val messageService: MessageService) {
 
 	@PostMapping("/see")
 	fun see(principal: Principal,
-					@RequestParam name: String,
 					@RequestParam convoId: Long,
 					@RequestParam lastSeenId: Long
 	): ResponseEntity<List<Message>> {
-		val newMessages = messageService.see(name, convoId, lastSeenId)
+		val newMessages = messageService.see(principal.name, convoId, lastSeenId)
 		return ResponseEntity(newMessages, OK)
 	}
 

@@ -63,17 +63,17 @@ class UserService(val passwordEncoder: PasswordEncoder) {
 		)
 	}
 
-	fun findStrangerByNameContains(name: String, searchTerm: String, limit: Int): List<User> {
+	fun findStrangerByNameContains(name: String, searchTerm: String, limit: Int): List<String> {
 		return let(name be "name", searchTerm be "searchTerm", limit be "limit").inQuery(
 				"""
 					MATCH (u:User{name:{name}})
 					MATCH (s:User) WHERE toLower(s.name) CONTAINS toLower({searchTerm})
-					AND NOT exists((s)-[:HAS_CONTACT]->(:Contact)<-[:HAS_CONTACT]-(u))
-					AND NOT exists((s)-[:REQUESTED]->(u))
-					AND NOT exists((u)-[:REQUESTED]->(s))
-					RETURN s LIMIT {limit}
+						AND NOT exists((s)-[:HAS_CONTACT]->(:Contact)<-[:HAS_CONTACT]-(u))
+						AND NOT exists((s)-[:REQUESTED]->(u))
+						AND NOT exists((u)-[:REQUESTED]->(s))
+					RETURN s.name AS name LIMIT {limit}
 				"""
-		).all("s")
+		).map { it["name"].string }.toList()
 	}
 
 }

@@ -19,7 +19,7 @@ class UserController(val userService: UserService) {
 			principal: Principal,
 			@RequestParam searchTerm: String,
 			@RequestParam limit: Int
-	): ResponseEntity<List<User>> {
+	): ResponseEntity<List<String>> {
 		val users = userService.findStrangerByNameContains(principal.name, searchTerm, limit)
 		return ResponseEntity(users, OK)
 	}
